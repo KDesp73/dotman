@@ -2,6 +2,9 @@
 
 source "$BASE_DIR"/lib/ansi.sh
 source "$BASE_DIR"/lib/config.sh
+source "$BASE_DIR"/lib/packages.sh
+source "$BASE_DIR"/lib/links.sh
+source "$BASE_DIR"/lib/scripts.sh
 
 echob(){
     style bold "$1"
@@ -20,38 +23,74 @@ help() {
     echo ""
 
     echob "COMMANDS"
-    echoi "run          Start the setup process"
+    echoi "run             Start the setup process"
+    # TODO
+    echoi "install         Only install the packages"
+    echoi "scripts         Only run the scripts"
+    echoi "link            Only create the symlinks"
+    echoi "clean           Remove symlinks"
+    echoi "cleanall        Remove everything managed by dotman"
     echo ""
 
     echob "OPTIONS"
-    echoi "--help       Prints this message"
-    echoi "--version    Prints the framework's version"
+    echoi "-h --help       Prints this message"
+    echoi "-v --version    Prints the framework's version"
     echo ""
 
     echo "Made by KDesp73 (Konstantinos Despoinidis)"
 }
 
+
+# Handles the commands and the flags of the cli
 execute() {
-    local run=$1
-    shift # Shift to remove the first argument (the function to run)
+    local packages=$1
+    shift
+    local scpts=$1
+    shift
+    local lks=$1
+    shift
 
     while [[ $# -gt 0 ]]; do
         key="$1"
         case $key in
-            --help)
+            -h|--help)
                 help
                 shift
                 ;;
-            --version)
+            -v|--version)
                 version
                 shift
                 ;;
             run)
-                $run "$@" # Pass all remaining arguments to the function
+                install_packages "$packages"
+                run_scripts "$scpts"
+                linker "$lks"
                 shift
                 ;;
+            install)
+                install_packages "$packages"
+                shift
+                ;;
+            link)
+                linker "$lks"
+                shift
+                ;;
+            clean)
+                remove_links "$lks"
+                shift
+                ;;
+            cleanall)
+                remove_links "$lks"
+                uninstall_packages "$packages"
+                shift
+                ;;
+            scripts)
+                run_scripts "$scpts"
+                shift
+                ;;
+
             *)
-                ERRO "Expected command or flag. Try 'dotman.sh --help'"
+                ERRO "Invalid argument '$key'. Try 'dotman.sh --help'"
                 exit 1
                 ;;
         esac

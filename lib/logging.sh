@@ -16,6 +16,10 @@ DEBU () {
     LOG "DEBU" "$1"
 }
 
+TODO () {
+    LOG "TODO"
+}
+
 echo_installed() {
     INFO "$1 installed successfully"
 }

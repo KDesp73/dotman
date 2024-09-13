@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added help and version arguments
+- Added central execute function
 - Added packages and installation process
 - Added linker and scripts
 

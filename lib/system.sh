@@ -45,3 +45,28 @@ get_installation_command() {
     esac
     echo "$INSTALLATION_COMMAND"
 }
+
+get_uninstallation_command() {
+    local DISTRO=$1
+    case $DISTRO in
+        ubuntu|debian|linuxmint)
+            UNINSTALLATION_COMMAND="apt-get remove -y"
+            ;;
+        fedora|centos|rhel)
+            UNINSTALLATION_COMMAND="yum remove -y"
+            ;;
+        arch)
+            UNINSTALLATION_COMMAND="pacman -Rs --noconfirm"
+            ;;
+        manjaro)
+            UNINSTALLATION_COMMAND="pamac remove --no-confirm"
+            ;;
+        gentoo)
+            UNINSTALLATION_COMMAND="emerge --unmerge --ask"
+            ;;
+        *)
+            UNINSTALLATION_COMMAND="unknown"
+            ;;
+    esac
+    echo "$UNINSTALLATION_COMMAND"
+}

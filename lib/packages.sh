@@ -2,6 +2,7 @@
 
 source "$BASE_DIR"/lib/system.sh
 source "$BASE_DIR"/lib/logging.sh
+source "$BASE_DIR"/lib/utils.sh
 
 install_package() {
     local distro
@@ -11,14 +12,37 @@ install_package() {
 
     color blue "$installation_command $1"
 
+    local rc=0
     if ! command -v "$1"> /dev/null 2>&1; then
         # TODO: remove comment
-        # $INSTALLATION_COMMAND "$1"
-        echo_installed "$1"
+        # $installation_command "$1"
+        command ...
     else 
-        echo_already_installed "$1"
+        rc=1
     fi
+    return $rc
 }
+
+uninstall_package() {
+    local distro
+    local uninstallation_command
+    distro=$(get_distro)
+    uninstallation_command=$(get_uninstallation_command "$distro")
+
+    color yellow "$uninstallation_command $1"
+
+    local rc=0
+    if ! command -v "$1"> /dev/null 2>&1; then
+        # TODO: remove comment
+        # $uninstallation_command "$1"
+        command ...
+    else 
+        rc=1
+    fi
+    return $rc
+}
+    
+
 
 is_installed(){
     local pkg=$1
@@ -33,10 +57,33 @@ is_installed(){
 install_packages() {
     local -n list=$1
 
+    local rc=0
     for pkg in "${list[@]}"; do
-        install_package "$pkg"
+        if ! install_package "$pkg" ; then
+            ERRO "Failed installing $pkg"
+            rc=1
+        fi
     done
+    return $rc
 }
+
+uninstall_packages() {
+    if ! read_yes_no "This will remove all specified packages. Are you sure you want to continue?" ; then
+        return 1
+    fi
+
+    local -n list=$1
+
+    local rc=0
+    for pkg in "${list[@]}"; do
+        if ! uninstall_package "$pkg" ; then
+            ERRO "Failed uninstalling $pkg"
+            rc=1
+        fi
+    done
+    return $rc
+}
+
 
 echo_installed(){
     local -n list=$1

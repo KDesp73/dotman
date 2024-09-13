@@ -1,3 +1,3 @@
 # dotman
 
-A bash framework to manage your dotfiles
+A bash library to manage your dotfiles
