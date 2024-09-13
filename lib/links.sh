@@ -15,7 +15,7 @@ link(){
         return 1
     fi
 
-    ln -s "$SCRIPT_DIR/$src" "$dest"/"$src"
+    ln -s "$BASE_DIR/$src" "$dest"/"$src"
     return 0
 }
 
@@ -33,7 +33,7 @@ linker() {
             continue
         fi
 
-        if ! link "$prefix"/"$key" "${hashmap[$key]}"; then
+        if ! link "$prefix$key" "${hashmap[$key]}"; then
             ERRO "Link for ${hashmap[$key]}/$key already exists"
             rc=1
         fi
