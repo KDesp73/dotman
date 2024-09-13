@@ -11,6 +11,8 @@ delete() {
 to_remove=(
     "get.sh"
     "README.md"
+    "LICENSE"
+    ".changelog"
     "CHANGELOG.md"
     ".gitignore"
     ".git"
