@@ -18,4 +18,5 @@ to_remove=(
 
 git clone --depth=1 https://github.com/KDesp73/dotman
 delete to_remove
+mv ./dotman/* .
 rm -rf dotman
