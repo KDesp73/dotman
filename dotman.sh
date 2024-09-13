@@ -7,6 +7,7 @@ source lib/packages.sh
 source lib/links.sh
 source lib/scripts.sh
 source lib/paths.sh
+source lib/execute.sh
 
 pkgs=(
     git
@@ -17,16 +18,19 @@ pkgs=(
 )
 
 scripts=(
-    ./scripts/test.sh
+    # ./scripts/example.sh
     # more...
 )
 
-declare -A links
-PREFIX="./dotfiles/"
-
+# links[<src>]=<dest>
 links[".zshrc"]="$HOME"
 links["nvim"]="$CONFIG"
 # more...
 
-run_scripts scripts
-linker links $PREFIX
+run () {
+    install_packages pkgs
+    run_scripts scripts
+    linker links #<optional prefix>
+}
+
+execute run "$@"

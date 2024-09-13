@@ -9,6 +9,11 @@ MAGENTA='\033[0;35m'
 CYAN='\033[0;36m'
 RESET='\033[0m'
 
+BOLD='\033[1m'
+UNDERLINE='\033[4m'
+BLINK='\033[5m'
+REVERSE='\033[7m'
+
 color() {
     local color=$1
     local message=$2
@@ -33,7 +38,30 @@ color() {
             echo -e "${CYAN}$message${RESET}"
             ;;
         *)
-            echo -e "$message"
+            echo -e "$color"
+            ;;
+    esac
+}
+
+style(){
+    local style=$1
+    local message=$2
+
+    case $style in
+        bold)
+            echo -e "${BOLD}$message${RESET}"
+            ;;
+        underline)
+            echo -e "${UNDERLINE}$message${RESET}"
+            ;;
+        blink)
+            echo -e "${BLINK}$message${RESET}"
+            ;;
+        reverse)
+            echo -e "${REVERSE}$message${RESET}"
+            ;;
+        *)
+            echo -e "$style"
             ;;
     esac
 }

@@ -3,6 +3,8 @@
 source "$BASE_DIR"/lib/logging.sh
 source "$BASE_DIR"/lib/files.sh
 
+declare -A links
+
 # Creates a symlink
 # link <src> <dest>
 link(){
