@@ -13,6 +13,7 @@ to_remove=(
     "README.md"
     ".changelog"
     "CHANGELOG.md"
+    "todo.txt"
     ".gitignore"
     ".git"
 )

@@ -24,12 +24,13 @@ help() {
 
     echob "COMMANDS"
     echoi "run             Start the setup process"
-    # TODO
     echoi "install         Only install the packages"
     echoi "scripts         Only run the scripts"
     echoi "link            Only create the symlinks"
     echoi "clean           Remove symlinks"
     echoi "cleanall        Remove everything managed by dotman"
+    # TODO
+    echoi "update          Get the latest dotman version" 
     echo ""
 
     echob "OPTIONS"
@@ -88,7 +89,10 @@ execute() {
                 run_scripts "$scpts"
                 shift
                 ;;
-
+            update)
+                TODO
+                shift
+                ;;
             *)
                 ERRO "Invalid argument '$key'. Try 'dotman.sh --help'"
                 exit 1
