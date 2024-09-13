@@ -14,8 +14,7 @@ install_package() {
 
     local rc=0
     if ! command -v "$1"> /dev/null 2>&1; then
-        # TODO: remove comment
-        # $installation_command "$1"
+        $installation_command "$1"
         command ...
     else 
         rc=1
@@ -33,11 +32,9 @@ uninstall_package() {
 
     local rc=0
     if ! command -v "$1"> /dev/null 2>&1; then
-        # TODO: remove comment
-        # $uninstallation_command "$1"
-        command ...
-    else 
         rc=1
+    else 
+        $uninstallation_command "$1"
     fi
     return $rc
 }

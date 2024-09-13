@@ -9,6 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- install command
+- scripts command
+- link command
+- clean command
+- cleanall command
 - Added help and version arguments
 - Added central execute function
 - Added packages and installation process

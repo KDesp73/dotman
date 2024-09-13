@@ -43,7 +43,7 @@ pkgs=(
 )
 
 scripts=(
-    # ./scripts/example.sh
+    ./scripts/example.sh
     # more...
 )
 
@@ -53,3 +53,5 @@ links["nvim"]="$CONFIG"
 # more...
 
 execute pkgs scripts links "$@"
+
+
