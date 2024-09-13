@@ -9,7 +9,6 @@ MAGENTA='\033[0;35m'
 CYAN='\033[0;36m'
 RESET='\033[0m'
 
-# Color function
 color() {
     local color=$1
     local message=$2

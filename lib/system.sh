@@ -3,7 +3,6 @@
 
 source "$BASE_DIR"/lib/ansi.sh
 
-
 get_distro() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
