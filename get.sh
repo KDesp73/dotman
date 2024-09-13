@@ -11,7 +11,6 @@ delete() {
 to_remove=(
     "get.sh"
     "README.md"
-    "LICENSE"
     ".changelog"
     "CHANGELOG.md"
     ".gitignore"
@@ -21,4 +20,5 @@ to_remove=(
 git clone --depth=1 https://github.com/KDesp73/dotman
 delete to_remove
 mv ./dotman/* .
+mv ./LICENSE ./lib
 rm -rf dotman
