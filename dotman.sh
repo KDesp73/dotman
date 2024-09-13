@@ -4,6 +4,7 @@ export BASE_DIR
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 source lib/paths.sh
+source lib/links.sh
 source lib/execute.sh
 
 ##################################################
