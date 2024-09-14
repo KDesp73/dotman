@@ -6,13 +6,14 @@ source "$BASE_DIR"/lib/ansi.sh
 run_scripts() {
     local -n list=$1
 
+    local rc=0
     for script in "${list[@]}"; do
         color magenta "$script..."
         if ! bash "$script" ; then
             ERRO "'$script' failed"
-            return 1
+            rc=1
         fi
     done
 
-    return 0
+    return $rc
 }

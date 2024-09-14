@@ -12,14 +12,14 @@ install_package() {
 
     color blue "$installation_command $1"
 
-    local rc=0
     if ! command -v "$1"> /dev/null 2>&1; then
-        $installation_command "$1"
-        command ...
+        if ! $installation_command "$1"; then
+            return 1
+        fi
     else 
-        rc=1
+        return 2 # Package exists
     fi
-    return $rc
+    return 0
 }
 
 uninstall_package() {
@@ -56,12 +56,17 @@ install_packages() {
 
     local rc=0
     for pkg in "${list[@]}"; do
-        if ! install_package "$pkg" ; then
+        local package_code
+        package_code=$(install_package "$pkg")
+
+        if [ "$package_code" -eq 1 ]; then
             ERRO "Failed installing $pkg"
             rc=1
+        elif [ "$package_code" -eq 2 ]; then
+            INFO "Package $pkg already exists"
         fi
     done
-    return $rc
+    return "$rc"
 }
 
 uninstall_packages() {

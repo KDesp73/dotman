@@ -2,6 +2,7 @@
 
 source "$BASE_DIR"/lib/logging.sh
 source "$BASE_DIR"/lib/files.sh
+source "$BASE_DIR"/lib/utils.sh
 
 declare -A links
 
@@ -10,30 +11,33 @@ declare -A links
 link(){
     local src=$1
     local dest=$2
+    local file="$dest/$src"
 
-    if [ -e "$dest"/"$src" ]; then
-        return 1
+    if [ -e "$file" ]; then
+        if ! read_yes_no "File $file already exists. Remove and link?"; then
+            return 1
+        fi
+        rm -rf "$file"
     fi
 
-    ln -s "$BASE_DIR/$src" "$dest"/"$src"
+    ln -s "$BASE_DIR/$src" "$file"
     return 0
 }
 
 linker() {
     local -n hashmap=$1
-    local prefix=$2
 
     local rc=0
     for key in "${!hashmap[@]}"; do
         color green "Linking $key..."
 
-        if ! file_exists "$prefix$key" ; then
-            ERRO "No such file or directory: $prefix$key" 
+        if ! file_exists "$key" ; then
+            ERRO "No such file or directory: $key" 
             rc=1
             continue
         fi
 
-        if ! link "$prefix$key" "${hashmap[$key]}"; then
+        if ! link "$key" "${hashmap[$key]}"; then
             ERRO "Link for ${hashmap[$key]}/$key already exists"
             rc=1
         fi
