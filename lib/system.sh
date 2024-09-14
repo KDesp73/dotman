@@ -39,6 +39,10 @@ get_installation_command() {
         gentoo)
             INSTALLATION_COMMAND="emerge --ask"
             ;;
+        nixos)
+            INSTALLATION_COMMAND="echo \"Warning:\nUsing nix-env permanently modifies a local profile of installed packages. 
+                                        This must be updated and maintained by the user in the same way as with a traditional package manager, 
+                                        foregoing many of the benefits that make Nix uniquely powerful.\nUsing nix-shell or a NixOS configuration is recommended instead. \"; nix-env -iA"
         *)
             INSTALLATION_COMMAND="unknown"
             ;;
@@ -64,6 +68,10 @@ get_uninstallation_command() {
         gentoo)
             UNINSTALLATION_COMMAND="emerge --unmerge --ask"
             ;;
+        nixos)
+            INSTALLATION_COMMAND="echo \"Warning:\nUsing nix-env permanently modifies a local profile of installed packages. 
+                                        This must be updated and maintained by the user in the same way as with a traditional package manager, 
+                                        foregoing many of the benefits that make Nix uniquely powerful.\nUsing nix-shell or a NixOS configuration is recommended instead. \"; nix-env --uninstall"
         *)
             UNINSTALLATION_COMMAND="unknown"
             ;;
