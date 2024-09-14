@@ -42,7 +42,7 @@ linker() {
 }
 
 remove_links() {
-    if ! read_yes_no "This will remove all symlinks. Are you sure you want to continue?" ; then
+    if ! read_yes_no "[WARN] This will remove all symlinks. Are you sure you want to continue?" ; then
         return 1
     fi
 

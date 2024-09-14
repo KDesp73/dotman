@@ -25,19 +25,19 @@ get_installation_command() {
     local DISTRO=$1
     case $DISTRO in
         ubuntu|debian|linuxmint)
-            INSTALLATION_COMMAND="apt-get install -y"
+            INSTALLATION_COMMAND="sudo apt-get install -y"
             ;;
         fedora|centos|rhel)
-            INSTALLATION_COMMAND="yum install -y"
+            INSTALLATION_COMMAND="sudo yum install -y"
             ;;
         arch)
-            INSTALLATION_COMMAND="pacman -S --noconfirm"
+            INSTALLATION_COMMAND="sudo pacman -S --noconfirm"
             ;;
         manjaro)
             INSTALLATION_COMMAND="pamac install --no-confirm --no-upgrade"
             ;;
         gentoo)
-            INSTALLATION_COMMAND="emerge --ask"
+            INSTALLATION_COMMAND="sudo emerge --ask"
             ;;
         *)
             INSTALLATION_COMMAND="unknown"
@@ -50,19 +50,19 @@ get_uninstallation_command() {
     local DISTRO=$1
     case $DISTRO in
         ubuntu|debian|linuxmint)
-            UNINSTALLATION_COMMAND="apt-get remove -y"
+            UNINSTALLATION_COMMAND="sudo apt remove -y"
             ;;
         fedora|centos|rhel)
-            UNINSTALLATION_COMMAND="yum remove -y"
+            UNINSTALLATION_COMMAND="sudo yum remove -y"
             ;;
         arch)
-            UNINSTALLATION_COMMAND="pacman -Rs --noconfirm"
+            UNINSTALLATION_COMMAND="sudo pacman -Rs --noconfirm"
             ;;
         manjaro)
             UNINSTALLATION_COMMAND="pamac remove --no-confirm"
             ;;
         gentoo)
-            UNINSTALLATION_COMMAND="emerge --unmerge --ask"
+            UNINSTALLATION_COMMAND="sudo emerge --unmerge --ask"
             ;;
         *)
             UNINSTALLATION_COMMAND="unknown"
@@ -70,3 +70,4 @@ get_uninstallation_command() {
     esac
     echo "$UNINSTALLATION_COMMAND"
 }
+

@@ -65,7 +65,7 @@ install_packages() {
 }
 
 uninstall_packages() {
-    if ! read_yes_no "This will remove all specified packages. Are you sure you want to continue?" ; then
+    if ! read_yes_no "[WARN] This will remove all specified packages. Are you sure you want to continue?" ; then
         return 1
     fi
 
