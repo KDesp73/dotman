@@ -63,7 +63,7 @@ remove_links() {
             continue
         fi
 
-        rm "${hashmap[$key]}"
+        rm -rf "${hashmap[$key]:?}/$key"
     done
     return $rc
 }
