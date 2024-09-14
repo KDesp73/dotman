@@ -38,7 +38,7 @@ linker() {
         fi
 
         if ! link "$key" "${hashmap[$key]}"; then
-            ERRO "Link for ${hashmap[$key]}/$key already exists"
+            ERRO "Failed linking to ${hashmap[$key]}/$key"
             rc=1
         fi
     done
