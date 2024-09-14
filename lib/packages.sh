@@ -57,7 +57,8 @@ install_packages() {
     local rc=0
     for pkg in "${list[@]}"; do
         local package_code
-        package_code=$(install_package "$pkg")
+        install_package "$pkg"
+        package_code=$?
 
         if [ "$package_code" -eq 1 ]; then
             ERRO "Failed installing $pkg"
