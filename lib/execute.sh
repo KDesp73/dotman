@@ -29,7 +29,7 @@ help() {
     echoi "link            Only create the symlinks"
     echoi "clean           Remove symlinks"
     echoi "cleanall        Remove everything managed by dotman"
-    # TODO
+    echoi "remove          Remove dotman from your dotfiles"
     echoi "update          Get the latest dotman version" 
     echo ""
 
@@ -41,6 +41,21 @@ help() {
     echo "Made by KDesp73 (Konstantinos Despoinidis)"
 }
 
+remove(){
+    rm -rf lib
+    rm dotman.sh
+}
+
+update(){
+    cp dotman.sh dotman.sh.old
+    cp lib/paths.sh paths.sh.old
+
+    remove
+    bash <(curl -s https://raw.githubusercontent.com/KDesp73/dotman/main/get.sh)
+
+    mv dotman.sh.old dotman.sh
+    mv paths.sh.old lib/paths.sh
+}
 
 # Handles the commands and the flags of the cli
 execute() {
@@ -90,7 +105,13 @@ execute() {
                 shift
                 ;;
             update)
-                TODO
+                update
+                INFO "dotman updated"
+                shift
+                ;;
+            remove)
+                remove
+                INFO "dotman removed"
                 shift
                 ;;
             *)

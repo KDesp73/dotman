@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Updated version to 0.0.2
 
+### Fixed
+
+- Fixed linker dest path issue
+
 
 ## [0.0.1] - 2024-09-13 
 
