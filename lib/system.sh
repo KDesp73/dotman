@@ -33,7 +33,7 @@ get_installation_command() {
         arch)
             INSTALLATION_COMMAND="sudo pacman -S --noconfirm"
             ;;
-        manjaro)
+        manjaro|ManjaroLinux)
             INSTALLATION_COMMAND="pamac install --no-confirm --no-upgrade"
             ;;
         gentoo)
