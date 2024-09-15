@@ -1,2 +1,2 @@
-TODO: update command
 TODO: option to keep the same structure (gnu stow)
+DONE: update command
