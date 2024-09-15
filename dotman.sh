@@ -9,7 +9,7 @@ source lib/execute.sh
 
 ##################################################
 #                                                #  
-#  [dotman.sh] - v0.0.2                          #  
+#  [dotman.sh] - v0.0.3                          #  
 #                                                #  
 #        The declarative dotfiles manager        #  
 #                                                #  
