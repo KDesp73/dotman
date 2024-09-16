@@ -43,7 +43,11 @@ pkgs=(
     # more...
 )
 
-scripts=(@)
+# adding '@' below will execute all scripts in the scripts/ directory
+scripts=(
+    ./scripts/example.sh
+    # more...
+)
 
 # links[<src>]=<dest>
 links[".zshrc"]="$HOME"
