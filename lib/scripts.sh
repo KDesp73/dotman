@@ -22,8 +22,9 @@ run_scripts() {
 
     local rc=0
     for script in "${list[@]}"; do
-        if [ "$script" == "*" ]; then
+        if [ "$script" == "@" ]; then
             run_all "scripts"
+            continue
         fi
         color magenta "$script..."
         if [ -f "$script" ]; then

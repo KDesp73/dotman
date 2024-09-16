@@ -43,10 +43,7 @@ pkgs=(
     # more...
 )
 
-scripts=(
-    ./scripts/example.sh
-    # more...
-)
+scripts=(@)
 
 # links[<src>]=<dest>
 links[".zshrc"]="$HOME"
