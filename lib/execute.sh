@@ -35,7 +35,7 @@ help() {
 
     echob "OPTIONS"
     echoi "-h --help       Prints this message"
-    echoi "-v --version    Prints the framework's version"
+    echoi "-v --version    Prints the library's version"
     echo ""
 
     echo "Made by KDesp73 (Konstantinos Despoinidis)"
