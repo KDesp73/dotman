@@ -9,6 +9,7 @@ pub const Context = struct {
 pub fn init(allocator: std.mem.Allocator) !Context {
     var config = conf.Config.init(allocator);
     try config.parse(conf.CONFIG_FILE);
+    try config.resolveVariables();
 
     return Context{
         .registry = rg.Registry.init(allocator),

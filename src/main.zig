@@ -22,7 +22,7 @@ pub fn main() !void
     defer std.process.argsFree(allocator, args);
 
     if (args.len < 2) {
-        std.debug.print("Usage: dotman [init|link|update|status]\n", .{});
+        std.debug.print("Usage: dotman <command>\n", .{});
         return;
     }
 
