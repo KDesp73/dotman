@@ -3,7 +3,8 @@ const cmd     = @import("command.zig");
 const version = @import("../version.zig");
 const ctx     = @import("../context.zig");
 
-fn run(context: *ctx.Context) !void {
+fn run(context: *ctx.Context) !void
+{
     _ = context;
     var major: u32 = 0;
     var minor: u32 = 0;

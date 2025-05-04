@@ -2,7 +2,8 @@ const std = @import("std");
 const cmd  = @import("command.zig");
 const ctx = @import("../context.zig");
 
-fn run(context: *ctx.Context) !void {
+fn run(context: *ctx.Context) !void
+{
     _ = context;
     std.debug.print("Linking...\n", .{});
 }

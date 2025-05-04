@@ -25,10 +25,12 @@ const ansi = @import("../ansi.zig");
 // 
 // echo "Made by KDesp73 (Konstantinos Despoinidis)"
 
-fn run(context: *ctx.Context) !void {
+fn run(context: *ctx.Context) !void
+{
     std.debug.print("{s}USAGE{s}\n", .{ansi.Bold, ansi.Reset});
     std.debug.print("  dotman <command>\n\n", .{});
 
+    std.debug.print("{s}COMMANDS{s}\n", .{ansi.Bold, ansi.Reset});
     var it = context.registry.iterator();
     while (it.next()) |entry| {
         const name = entry.key_ptr.*;
@@ -36,7 +38,7 @@ fn run(context: *ctx.Context) !void {
 
         const help = if (command.help.len == 0) "No description available" else command.help;
 
-        std.debug.print("  {:<10s}{s}\n", .{name, help});
+        std.debug.print("  {s:<10}  {s}\n", .{name, help});
     }
 
     std.debug.print("\n{s}Made by KDesp73 (Konstantinos Despoinidis){s}\n", .{ansi.FgMagenta, ansi.Reset});
