@@ -35,4 +35,5 @@ ghostty -> {config}
 sway -> {config}
 fuzzel -> {config}
 
-
+> variables
+config = {home}/.config
