@@ -3,28 +3,6 @@ const cmd  = @import("command.zig");
 const ctx = @import("../context.zig");
 const ansi = @import("../ansi.zig");
 
-// echob "USAGE"
-// echoi "dotman.sh <command> <options>"
-// echo ""
-// 
-// echob "COMMANDS"
-// echoi "run             Start the setup process"
-// echoi "install         Only install the packages"
-// echoi "scripts         Only run the scripts"
-// echoi "link            Only create the symlinks"
-// echoi "clean           Remove symlinks"
-// echoi "cleanall        Remove everything managed by dotman"
-// echoi "remove          Remove dotman from your dotfiles"
-// echoi "update          Get the latest dotman version" 
-// echo ""
-// 
-// echob "OPTIONS"
-// echoi "-h --help       Prints this message"
-// echoi "-v --version    Prints the library's version"
-// echo ""
-// 
-// echo "Made by KDesp73 (Konstantinos Despoinidis)"
-
 fn run(context: *ctx.Context) !void
 {
     const stdout = std.io.getStdOut().writer();

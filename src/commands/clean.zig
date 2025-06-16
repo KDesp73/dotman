@@ -24,7 +24,7 @@ fn run(context: *ctx.Context) !void
 
 pub const Cmd = cmd.Command {
     .run = run,
-    .help = "Only install the packages"
+    .help = "Remove all symlinks"
 };
 
 
