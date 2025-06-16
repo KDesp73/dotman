@@ -11,11 +11,17 @@ fn run(context: *ctx.Context) !void
     while (it.next()) |entry| {
         const key = entry.key_ptr.*;
         const value = entry.value_ptr.*;
-        std.log.info("key: {s}, value: {s}", .{key, value});
+
+        var buf: [std.fs.MAX_PATH_BYTES]u8 = undefined;
+        const dest = try system.targetPath(key, value, &buf);
 
         system.symlink(key, value) catch |err| switch (err) {
             error.UnexpectedErrno => {
                 std.log.err("Symlink Failed", .{});
+                return;
+            },
+            error.FileAlreadyExists => {
+                std.log.err("File {s} already exists", .{dest});
                 return;
             },
             else => return err,

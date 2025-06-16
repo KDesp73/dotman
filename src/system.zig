@@ -19,7 +19,7 @@ fn basename(path: []const u8) []const u8 {
     return path;
 }
 
-fn targetPath(src: []const u8, dst: []const u8, buf: []u8) ![]const u8 {
+pub fn targetPath(src: []const u8, dst: []const u8, buf: []u8) ![]const u8 {
     if (isDir(dst)) {
         const src_basename = basename(src);
         return try std.fmt.bufPrint(buf, "{s}/{s}", .{ dst, src_basename });
@@ -41,10 +41,8 @@ pub fn symlink(src: []const u8, dst: []const u8) !void {
 
     var buf: [std.fs.MAX_PATH_BYTES]u8 = undefined;
     const dest = try targetPath(source, dst, &buf);
-    std.log.debug("dest: {s}", .{dest});
 
     if(fileExists(dest)) {
-        std.log.err("File already exists", .{});
         return SystemError.FileAlreadyExists;
     }
     
