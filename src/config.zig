@@ -1,4 +1,5 @@
 const std = @import("std");
+const system = @import("system.zig");
 
 pub const CONFIG_FILE = ".dotman";
 
@@ -6,6 +7,10 @@ const READING_PACKAGES = 0;
 const READING_LINKS = 1;
 const READING_SCRIPTS = 2;
 const READING_VARIABLES = 3;
+
+const ConfigError = error {
+    ConfigFileNotFound
+};
 
 pub const Config = struct {
     links: std.StringHashMap([]const u8),
@@ -85,6 +90,10 @@ pub const Config = struct {
     pub fn parse(self: *Config, path: []const u8) !void
     {
         const allocator = std.heap.page_allocator;
+
+        if(!system.fileExists(path)) {
+            return ConfigError.ConfigFileNotFound;
+        }
 
         const file = try std.fs.cwd().openFile(path, .{});
         defer file.close();

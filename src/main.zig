@@ -1,16 +1,17 @@
+const std = @import("std");
+
 const clean_cmd = @import("commands/clean.zig");
-const config = @import("config.zig");
 const config_cmd = @import("commands/config.zig");
-const ctx = @import("context.zig");
 const help_cmd = @import("commands/help.zig");
 const install_cmd = @import("commands/install.zig");
 const link_cmd = @import("commands/link.zig");
 const rg = @import("commands/registry.zig");
 const run_cmd = @import("commands/run.zig");
 const scripts_cmd = @import("commands/scripts.zig");
-const std = @import("std");
-const version_cmd = @import("commands/version.zig");
 const update_cmd = @import("commands/update.zig");
+const version_cmd = @import("commands/version.zig");
+const config = @import("config.zig");
+const ctx = @import("context.zig");
 
 fn populateRegistry(registry: *rg.Registry) !void
 {
@@ -39,7 +40,16 @@ pub fn main() !void
 
     const command = args[1];
 
-    var context = try ctx.Context.init(allocator);
+    var context = ctx.Context.init(allocator) catch |err| switch(err) {
+        error.ConfigFileNotFound => {
+            std.log.err("Please create and configure a `.dotman` file", .{});
+            return;
+        },
+        else => {
+            return;
+        }
+    };
+
     defer context.deinit();
 
     try populateRegistry(&context.registry);
