@@ -5,4 +5,6 @@
 git clone https://github.com/KDesp73/dotman --depth=1
 cd dotman || exit 1
 zig build
-mv ./zig-out/bin/dotman ..
+mv ./zig-out/bin/dotman ../temp.dotman
+rm -rf dotman
+mv temp.dotman dotman
