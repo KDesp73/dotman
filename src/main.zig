@@ -9,6 +9,7 @@ const config_cmd = @import("commands/config.zig");
 const scripts_cmd = @import("commands/scripts.zig");
 const install_cmd = @import("commands/install.zig");
 const run_cmd = @import("commands/run.zig");
+const clean_cmd = @import("commands/clean.zig");
 
 fn populateRegistry(registry: *rg.Registry) !void
 {
@@ -19,7 +20,7 @@ fn populateRegistry(registry: *rg.Registry) !void
     try registry.put("scripts", scripts_cmd.Cmd);
     try registry.put("install", install_cmd.Cmd);
     try registry.put("run", run_cmd.Cmd);
-    // TODO: clean 
+    try registry.put("clean", clean_cmd.Cmd);
     // TODO: cleanall 
     // TODO: remove 
     // TODO: update 
