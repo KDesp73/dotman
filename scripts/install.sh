@@ -6,22 +6,20 @@ set -euo pipefail
 
 REPO_URL="https://github.com/KDesp73/dotman"
 TEMP_DIR="$(mktemp -d)"
-INSTALL_NAME="dotman"
+BINARY_NAME="dotman"
 
-echo "[*] Cloning repository..."
+echo "[*] Cloning dotman repo into temporary directory..."
 git clone --depth=1 "$REPO_URL" "$TEMP_DIR"
 
-echo "[*] Building with Zig..."
+echo "[*] Building dotman with Zig..."
 cd "$TEMP_DIR"
 zig build
 
-echo "[*] Moving binary to current directory..."
-mv ./zig-out/bin/"$INSTALL_NAME" "../.$INSTALL_NAME.tmp"
+echo "[*] Moving compiled binary to current directory..."
+cp "./zig-out/bin/$BINARY_NAME" "$OLDPWD/$BINARY_NAME"
 
-echo "[*] Cleaning up..."
-cd ..
+echo "[*] Cleaning up temporary directory..."
+cd "$OLDPWD"
 rm -rf "$TEMP_DIR"
 
-mv ".$INSTALL_NAME.tmp" "$INSTALL_NAME"
-
-echo "[✓] Installed '$INSTALL_NAME' successfully."
+echo "[✓] Installed '$BINARY_NAME' to $(pwd)/$BINARY_NAME"
