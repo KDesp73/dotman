@@ -1,0 +1,12 @@
+dotman <COMMAND>;
+
+<COMMAND> ::=  (help) "Prints the help message"
+             | (version) "Prints the dotman version"
+			 | (update) "Update to a newer version" 
+			 | (link) "Link dotfiles" 
+			 | (config) "Print the parsed config" 
+			 | (scripts) "Run the defined scripts" 
+			 | (install) "Install the defined packages" 
+			 | (clean) "Remove all symlinks" 
+			 | (run) "Run the setup process" 
+			 ;
