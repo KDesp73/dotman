@@ -1,0 +1,23 @@
+> packages
+zsh
+make
+kitty
+cmake
+swaylock-effects
+swaybg
+swayidle
+emacs
+fuzzel
+waybar
+
+# This is a comment
+
+> scripts
+scripts/*
+test_script.sh
+
+> links
+.dotman -> {home}
+
+> variables
+config = {home}/.config

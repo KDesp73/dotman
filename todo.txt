@@ -1,3 +1,0 @@
-TODO: option to keep the same structure (gnu stow)
-DONE: update command
-DONE: adding * in the scripts array should run everything in the scripts/ directory

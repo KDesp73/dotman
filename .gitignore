@@ -1,1 +1,3 @@
 .changelog
+.zig-cache
+zig-out

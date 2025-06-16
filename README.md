@@ -1,20 +1,19 @@
 # dotman
 
-A lightweight bash library to manage your dotfiles
+A simple cli to manage your dotfiles
 
 ## Get started
 
-Run the below command in your dotfiles directory and setup the dotman.sh file to suit your needs
+Run the below command in your dotfiles directory
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/KDesp73/dotman/main/get.sh)
+bash <(curl -s https://raw.githubusercontent.com/KDesp73/dotman/main/scripts/install.sh)
 ```
 
 ## Usage
 
-1. Add scripts you want to run in the `scripts` directory
-2. Define the packages, scripts and links in the `dotman.sh` file
-3. Run `dotman.sh run` to configure your dotfiles
+1. Define your packages, scripts and links in the `.dotman` file
+2. Run `dotman run` to configure your dotfiles
 
 ## LICENSE
 
