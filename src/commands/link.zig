@@ -18,11 +18,11 @@ fn run(context: *ctx.Context) !void
         system.symlink(key, value) catch |err| switch (err) {
             error.UnexpectedErrno => {
                 std.log.err("Symlink Failed", .{});
-                return;
+                continue;
             },
             error.FileAlreadyExists => {
                 std.log.err("File {s} already exists", .{dest});
-                return;
+                continue;
             },
             else => return err,
         };
