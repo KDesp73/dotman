@@ -11,14 +11,11 @@ fn run(context: *ctx.Context) !void
     while (it.next()) |entry| {
         const key = entry.key_ptr.*;
         const value = entry.value_ptr.*;
+        std.log.info("key: {s}, value: {s}", .{key, value});
 
         system.symlink(key, value) catch |err| switch (err) {
-            error.PathAlreadyExists => {
-                std.log.err("Symlink {s} -> {s} already exists", .{ key, value });
-                return;
-            },
-            error.AccessDenied => {
-                std.log.err("Permission denied.", .{});
+            error.UnexpectedErrno => {
+                std.log.err("Symlink Failed", .{});
                 return;
             },
             else => return err,
