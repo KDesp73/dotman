@@ -194,7 +194,8 @@ pub const Config = struct {
         }
     }
 
-    pub fn resolveVariables(self: *Config) !void {
+    pub fn resolveVariables(self: *Config) !void
+    {
         var it = self.links.iterator();
         while (it.next()) |entry| {
             const key = entry.key_ptr.*;
@@ -209,35 +210,32 @@ pub const Config = struct {
 };
 
 
-fn replaceVariables(str: []const u8, variables: std.StringHashMap([]const u8)) ![]const u8 {
+fn replaceVariables(str: []const u8, variables: std.StringHashMap([]const u8)) ![]const u8
+{
     var result = str;
     var start: usize = 0;
 
     while (true) {
-        // Find opening brace
         const open_brace = std.mem.indexOf(u8, result[start..], "{");
-        if (open_brace == null) break; // No more placeholders
+        if (open_brace == null) break;
 
         const close_brace = std.mem.indexOf(u8, result[start + open_brace.? + 1..], "}");
-        if (close_brace == null) break; // No matching closing brace
+        if (close_brace == null) break;
 
-        // Get the variable name inside braces
         const var_name = result[start + open_brace.? + 1..start + open_brace.? + 1 + close_brace.?];
 
-        // Resolve the variable to get its value
         const replacement = try resolveVariable(var_name, variables);
 
-        // Replace the variable placeholder with the resolved value
         result = try replaceSubstring(result, result[start + open_brace.?..start + open_brace.? + 1 + close_brace.? + 1], replacement);
 
-        // Move start position forward to continue replacing
         start = start + open_brace.? + 1 + close_brace.? + 1;
     }
 
     return result;
 }
 
-fn replaceSubstring(str: []const u8, target: []const u8, replacement: []const u8) ![]const u8 {
+fn replaceSubstring(str: []const u8, target: []const u8, replacement: []const u8) ![]const u8
+{
     var result = std.ArrayList(u8).init(std.heap.page_allocator);
     var start: usize = 0;
 
@@ -245,40 +243,35 @@ fn replaceSubstring(str: []const u8, target: []const u8, replacement: []const u8
         const target_index = std.mem.indexOf(u8, str[start..], target);
         if (target_index == null) break;  // No more targets to replace
 
-        // Append everything before the found target
         try result.appendSlice(str[start..start + target_index.?]);
 
-        // Append the replacement string
         try result.appendSlice(replacement);
 
         start = start + target_index.? + target.len;
     }
 
-    // Append the remainder of the string after the last match
     try result.appendSlice(str[start..]);
 
     return result.toOwnedSlice();
 }
 
-fn resolveVariable(var_name: []const u8, variables: std.StringHashMap([]const u8)) ![]const u8 {
+fn resolveVariable(var_name: []const u8, variables: std.StringHashMap([]const u8)) ![]const u8
+{
     const value = variables.get(var_name);
     if (value == null) return error.InvalidVariable;
-    var result = value.?; // Start with the resolved value
+    var result = value.?;
 
     while (true) {
-        // Look for any more variables within the string
         const open_brace = std.mem.indexOf(u8, result, "{");
-        if (open_brace == null) break; // No more placeholders
+        if (open_brace == null) break;
 
         const close_brace = std.mem.indexOf(u8, result[open_brace.? + 1..], "}");
-        if (close_brace == null) break; // No matching closing brace
+        if (close_brace == null) break;
 
         const inner_var_name = result[open_brace.? + 1..open_brace.? + 1 + close_brace.?];
 
-        // Recursively resolve the inner variable
         const inner_value = try resolveVariable(inner_var_name, variables);
 
-        // Replace the placeholder with the resolved value
         result = try replaceSubstring(result, result[open_brace.?..open_brace.? + 1 + close_brace.? + 1], inner_value);
     }
 

@@ -1,14 +1,33 @@
 const std = @import("std");
 const cmd  = @import("command.zig");
 const ctx = @import("../context.zig");
+const system = @import("../system.zig");
 
 fn run(context: *ctx.Context) !void
 {
-    _ = context;
-    std.debug.print("Linking...\n", .{});
+    const links = context.config.links;
+    var it = links.iterator();
+
+    while (it.next()) |entry| {
+        const key = entry.key_ptr.*;
+        const value = entry.value_ptr.*;
+
+        system.symlink(key, value) catch |err| switch (err) {
+            error.PathAlreadyExists => {
+                std.log.err("Symlink {s} -> {s} already exists", .{ key, value });
+                return;
+            },
+            error.AccessDenied => {
+                std.log.err("Permission denied.", .{});
+                return;
+            },
+            else => return err,
+        };
+        std.log.info("Linked {s} -> {s}", .{key, value});
+    }
 }
 
 pub const Cmd = cmd.Command {
     .run = run,
-    .help = "Only create the symlinks"
+    .help = "Create the symlinks"
 };

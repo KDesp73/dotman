@@ -1,5 +1,5 @@
-const std  = @import("std");
-const rg   = @import("commands/registry.zig");
+const std = @import("std");
+const rg = @import("commands/registry.zig");
 const help = @import("commands/help.zig");
 const version = @import("commands/version.zig");
 const link = @import("commands/link.zig");
@@ -9,20 +9,21 @@ const config_cmd = @import("commands/config.zig");
 
 fn populateRegistry(registry: *rg.Registry) !void
 {
-    try rg.register(registry, "help", help.Cmd);
-    try rg.register(registry, "version", version.Cmd);
-    try rg.register(registry, "link", link.Cmd);
-    try rg.register(registry, "config", config_cmd.Cmd);
+    try registry.put("help", help.Cmd);
+    try registry.put("version", version.Cmd);
+    try registry.put("link", link.Cmd);
+    try registry.put("config", config_cmd.Cmd);
 }
 
 pub fn main() !void
 {
     const allocator = std.heap.page_allocator;
+    const stdout = std.io.getStdOut().writer();
     const args = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, args);
 
     if (args.len < 2) {
-        std.debug.print("Usage: dotman <command>\n", .{});
+        try stdout.print("Try: dotman help\n", .{});
         return;
     }
 
@@ -38,6 +39,6 @@ pub fn main() !void
     if (cmd) |c| {
         try c.run(&context);
     } else {
-        std.debug.print("Unknown command: {s}\n", .{command});
+        try stdout.print("Unknown command: {s}\n", .{command});
     }
 }
