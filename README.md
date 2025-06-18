@@ -1,6 +1,6 @@
 # dotman
 
-A simple cli to manage your dotfiles
+A simple cli tool to manage your dotfiles
 
 ## Get started
 
