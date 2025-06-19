@@ -18,7 +18,6 @@ pub fn run(context: *ctx.Context) !void {
 
     const VERSION_URL = "https://raw.githubusercontent.com/KDesp73/dotman/refs/heads/main/docs/VERSION";
     var res = try system.runCommand(allocator, "curl -s {s}", .{VERSION_URL});
-    defer res.deinit(allocator);
 
     const newest_raw = std.mem.trim(u8, res.stdout, " \r\n");
 
@@ -32,13 +31,11 @@ pub fn run(context: *ctx.Context) !void {
     const newest_minor = try std.fmt.parseInt(u32, minor_str, 10);
     const newest_patch = try std.fmt.parseInt(u32, patch_str, 10);
 
-    // Get current version
     var current_major: u32 = 0;
     var current_minor: u32 = 0;
     var current_patch: u32 = 0;
     version.get(&current_major, &current_minor, &current_patch);
 
-    // Compare versions correctly
     const should_update = switch (std.math.order(current_major, newest_major)) {
         .lt => true,
         .gt => false,
@@ -51,17 +48,18 @@ pub fn run(context: *ctx.Context) !void {
 
     if (!should_update) {
         std.log.info("dotman is up to date (v{d}.{d}.{d})", .{ current_major, current_minor, current_patch });
+        res.deinit(allocator);
         return;
     }
 
     std.log.info("Updating dotman to v{d}.{d}.{d}...", .{ newest_major, newest_minor, newest_patch });
 
-    // Run the install script to update
-    var res1 = try system.runCommand(allocator,
+    res.deinit(allocator);
+    res = try system.runCommand(allocator,
         "bash <(curl -s https://raw.githubusercontent.com/KDesp73/dotman/main/scripts/install.sh)",
         .{}
     );
-    defer res1.deinit(allocator);
+    defer res.deinit(allocator);
 
     std.log.info("Update complete!", .{});
 }
