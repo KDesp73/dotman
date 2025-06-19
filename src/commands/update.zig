@@ -57,10 +57,11 @@ pub fn run(context: *ctx.Context) !void {
     std.log.info("Updating dotman to v{d}.{d}.{d}...", .{ newest_major, newest_minor, newest_patch });
 
     // Run the install script to update
-    _ = try system.runCommand(allocator,
+    res = try system.runCommand(allocator,
         "bash <(curl -s https://raw.githubusercontent.com/KDesp73/dotman/main/scripts/install.sh)",
         .{}
     );
+    defer res.deinit(allocator);
 
     std.log.info("Update complete!", .{});
 }
