@@ -18,7 +18,6 @@ pub fn run(context: *ctx.Context) !void {
 
     const VERSION_URL = "https://raw.githubusercontent.com/KDesp73/dotman/refs/heads/main/docs/VERSION";
     var res = try system.runCommand(allocator, "curl -s {s}", .{VERSION_URL});
-    defer res.deinit(allocator);
 
     const newest_raw = std.mem.trim(u8, res.stdout, " \r\n");
 
@@ -57,6 +56,7 @@ pub fn run(context: *ctx.Context) !void {
     std.log.info("Updating dotman to v{d}.{d}.{d}...", .{ newest_major, newest_minor, newest_patch });
 
     // Run the install script to update
+    res.deinit(allocator);
     res = try system.runCommand(allocator,
         "bash <(curl -s https://raw.githubusercontent.com/KDesp73/dotman/main/scripts/install.sh)",
         .{}
