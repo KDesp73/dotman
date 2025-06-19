@@ -24,7 +24,14 @@ fn run(context: *ctx.Context) !void
                 std.log.err("File {s} already exists", .{dest});
                 continue;
             },
-            else => return err,
+            error.FileNotFound => {
+                std.log.err("File {s} does not exist", .{key});
+                continue;
+            },
+            else => {
+                std.log.err("Something went wrong with {s}", .{key});
+                continue;
+            }
         };
         std.log.info("Linked {s} -> {s}", .{key, value});
     }

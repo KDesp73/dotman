@@ -65,6 +65,7 @@ fn runCommandString(allocator: std.mem.Allocator, command: []const u8) !CommandR
 const SystemError = error{
     UnexpectedErrno,
     FileAlreadyExists,
+    FileNotFound,
 };
 
 fn basename(path: []const u8) []const u8 {
@@ -102,6 +103,10 @@ pub fn symlink(src: []const u8, dst: []const u8) !void {
 
     var buf: [std.fs.MAX_PATH_BYTES]u8 = undefined;
     const dest = try targetPath(source, dst, &buf);
+
+    if(!fileExists(src)) {
+        return SystemError.FileNotFound;
+    }
 
     if(fileExists(dest)) {
         return SystemError.FileAlreadyExists;
