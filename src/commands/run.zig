@@ -5,8 +5,8 @@ const ctx = @import("../context.zig");
 fn run(context: *ctx.Context) !void
 {
     try context.registry.get("link").?.run(context);
-    try context.registry.get("scripts").?.run(context);
     try context.registry.get("install").?.run(context);
+    try context.registry.get("scripts").?.run(context);
 }
 
 pub const Cmd = cmd.Command {
